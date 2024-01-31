@@ -1,0 +1,20 @@
+'use strict';
+
+var mediaData = "";
+
+export function update(value) {
+	return mediaData;
+}
+
+export function mediaThumbnailChanged(event) {
+	if (event.hasThumbnail == true) {
+		console.log("thumbnail true")
+		thisScene.getLayer("Song Title").getEffect("Song Transform").visible = true
+		thisScene.getLayer("Artist Name").getEffect("Song Transform").visible = true
+		return true
+	} else {
+		thisScene.getLayer("Song Title").getEffect("Song Transform").visible = false
+		thisScene.getLayer("Artist Name").getEffect("Song Transform").visible = false
+		return false
+	}
+}
