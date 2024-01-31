@@ -13,7 +13,7 @@ export function update(value) {
 	return mediaData;
 }
 
-//Option 1: Add an effect layer (DELETE IF USING OPTION 2)
+//Enables transform efects on both text layers with album cover availability
 export function mediaThumbnailChanged(event) {
 	//Checking if the thumbnail for the song exists
 	if (event.hasThumbnail == true) {
@@ -24,19 +24,6 @@ export function mediaThumbnailChanged(event) {
 	} else {
 		thisScene.getLayer(textLayer1).getEffect("Song Transform").visible = false
 		thisScene.getLayer(textLayer2).getEffect("Song Transform").visible = false
-		return false
-	}
-}
-
-//Option 2: Change Origin Directly (DELETE IF USING OPTION 1)
-export function mediaThumbnailChanged(event) {
-	//Checking if the thumbnail for the song exists
-	if (event.hasThumbnail == true) {
-		//Shifting Origin Points
-		thisScene.getLayer(textLayer1).origin.x = thisLayer.origin.x + 300
-		thisScene.getLayer(textLayer2).origin.x = thisLayer.origin.x + 300
-		return true
-	} else {
 		return false
 	}
 }
