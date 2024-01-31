@@ -1,20 +1,42 @@
+//IMPORTANT: Read description before use!
 'use strict';
 
 var mediaData = "";
 
+//You may want to edit these values:
+var textLayer1 = "Song Title";
+var textLayer2 = "Artist Name";
+var transformEffect = "Song Transform";
+
+//Retrieves media data per frame
 export function update(value) {
 	return mediaData;
 }
 
+//Option 1: Add an effect layer (DELETE IF USING OPTION 2)
 export function mediaThumbnailChanged(event) {
+	//Checking if the thumbnail for the song exists
 	if (event.hasThumbnail == true) {
-		console.log("thumbnail true")
-		thisScene.getLayer("Song Title").getEffect("Song Transform").visible = true
-		thisScene.getLayer("Artist Name").getEffect("Song Transform").visible = true
+		//Enabling transform effect visibility
+		thisScene.getLayer(textLayer1).getEffect("Song Transform").visible = true
+		thisScene.getLayer(textLayer2).getEffect("Song Transform").visible = true
 		return true
 	} else {
-		thisScene.getLayer("Song Title").getEffect("Song Transform").visible = false
-		thisScene.getLayer("Artist Name").getEffect("Song Transform").visible = false
+		thisScene.getLayer(textLayer1).getEffect("Song Transform").visible = false
+		thisScene.getLayer(textLayer2).getEffect("Song Transform").visible = false
+		return false
+	}
+}
+
+//Option 2: Change Origin Directly (DELETE IF USING OPTION 1)
+export function mediaThumbnailChanged(event) {
+	//Checking if the thumbnail for the song exists
+	if (event.hasThumbnail == true) {
+		//Shifting Origin Points
+		thisScene.getLayer(textLayer1).origin.x = thisLayer.origin.x + 300
+		thisScene.getLayer(textLayer2).origin.x = thisLayer.origin.x + 300
+		return true
+	} else {
 		return false
 	}
 }
