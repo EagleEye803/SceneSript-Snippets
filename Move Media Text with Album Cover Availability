@@ -8,7 +8,7 @@ var textLayer1 = "Song Title";
 var textLayer2 = "Artist Name";
 var transformEffect = "Song Transform";
 
-//Retrieves media data per frame
+//Retrieves media data per frame:
 export function update(value) {
 	return mediaData;
 }
