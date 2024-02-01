@@ -1,0 +1,115 @@
+'use strict';
+
+//STEP 1: Create four user properties:
+/*
+!  positionx - A combo property containing "Left", "Right" and "Center" options. Used to select the X location of the object.
+!  positiony - A second combo property containing "Top", "Bottom", and "Center" options. Used to select the Y location of the object.
+!  paddingx - A slider property from 0 - 500. Used to define the distance from the edge of the canvas on the x axis.
+!  paddingy - A slider property from 0 - 500. Used to define the distance from the edge of the canvas on the y axis.
+*/
+
+//STEP 2: Bind this code to the "origin" property of the object you wish to create location controls for. Six sliders should appear.
+
+//STEP 3: Test each location and edit the values of the sliders so they are correct for your screen.
+//From there, the user properties will allow any user with any size screen to relocate the object to wherever they like and adjust for smaller screens.
+
+//This part of the code sets up all the sliders.
+export var scriptProperties = createScriptProperties()
+	.addSlider({
+		name: 'left',
+		label: 'Left',
+		value: 500,
+		min: 0,
+		max: 1000,
+		integer: true
+	})
+	.addSlider({
+		name: 'right',
+		label: 'Right',
+		value: 300,
+		min: 0,
+		max: 1000,
+		integer: true
+	})
+	.addSlider({
+		name: 'top',
+		label: 'Top',
+		value: 300,
+		min: 0,
+		max: 1000,
+		integer: true
+	})
+	.addSlider({
+		name: 'bottom',
+		label: 'Bottom',
+		value: 300,
+		min: 0,
+		max: 1000,
+		integer: true
+	})
+	.addSlider({
+		name: 'centerX',
+		label: 'Center X',
+		value: 100,
+		min: -1000,
+		max: 1000,
+		integer: true
+	})
+	.addSlider({
+		name: 'centerY',
+		label: 'Center Y',
+		value: 0,
+		min: -1000,
+		max: 1000,
+		integer: true
+	})
+	.finish();
+
+//This function does all the heavy lifting.
+function shift(value) {
+  //The "buffer" variable combines the user properties and the slider values to create total values for each direction.
+	var buffer = {
+	left: 500 + engine.userProperties.paddingx,
+	right: 300 + engine.userProperties.paddingx,
+	top: 300 + engine.userProperties.paddingy,
+	bottom: 300 + engine.userProperties.paddingy
+	}
+
+  //I'm using a case selection structure to detect which location the user has selected and transform the object that way.
+	switch(engine.userProperties.positionx) {
+		case "left":
+			value.x = buffer.left;
+			break;
+		case "center":
+			value.x = (scriptProperties.centerX + engine.canvasSize.x / 2)
+			break;
+		case "right":
+			value.x = (engine.canvasSize.x - buffer.right);
+			break;
+	};
+  //Doing what we did again but for the y direction.
+	switch(engine.userProperties.positiony) {
+		case "top":
+			value.y = (engine.canvasSize.y - buffer.top);
+			break;
+		case "center":
+			value.y = (scriptProperties.centerY + engine.canvasSize.y / 2);
+			break;
+		case "bottom":
+			value.y = buffer.bottom
+	}
+	return value;
+}
+
+//This is the boi that repeatedly calls the shift function. 
+export function update(value) {
+	return shift(value)
+}
+
+
+//If you need to debug, uncomment this to read some quick log details!
+/*export function init(value) {
+	console.log("Screen X: " + engine.screenResolution.x)
+	console.log("Screen Y: " + engine.screenResolution.y)
+	console.log("Padding: " + engine.userProperties.paddingx)
+}*/
