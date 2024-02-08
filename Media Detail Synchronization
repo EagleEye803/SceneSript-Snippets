@@ -1,0 +1,12 @@
+//Set Text to Song Title
+"use strict";
+
+var mediaData = "";
+
+export function update(value) {
+	return mediaData;
+}
+
+export function mediaPropertiesChanged(event) {
+	mediaData = event.title
+}
