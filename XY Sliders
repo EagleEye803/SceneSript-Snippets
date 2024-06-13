@@ -1,0 +1,26 @@
+'use strict';
+
+export var scriptProperties = createScriptProperties()
+	.addSlider({
+		name: 'x',
+		label: 'X Position',
+		value: 2500,
+		min: 0,
+		max: 3840,
+		integer: true
+	})
+	.addSlider({
+		name: 'y',
+		label: 'Y Position',
+		value: 1800,
+		min: 0,
+		max: 2160,
+		integer: true
+	})
+	.finish();
+
+export function update(value) {
+	value.x = scriptProperties.x
+	value.y = scriptProperties.y
+	return value;
+}
